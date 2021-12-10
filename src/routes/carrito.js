@@ -33,7 +33,7 @@ router.post('/',(req,res)=>{
     })
 })
 
-//POST 
+//POST add prod al carrito
 router.post('/:id/products/:pid', (req, res) => {
     const cid = Number(req.params.id)
     const pid = Number(req.params.pid)
@@ -43,25 +43,25 @@ router.post('/:id/products/:pid', (req, res) => {
     })
 })
 
-//PUTS add prod al carrito
-router.put('/:cid/products',(req,res)=>{
-    let body = req.body;
-    let id = parseInt(req.params.cid);
-    contenedor.updateCart(id,body).then(result=>{
-        res.send(result);
-    })
-})
+// //PUTS 
+// router.put('/:cid/products',(req,res)=>{
+//     let body = req.body;
+//     let id = parseInt(req.params.cid);
+//     contenedor.updateCart(id,body).then(result=>{
+//         res.send(result);
+//     })
+// })
 //DELETE
 router.delete('/:id',(req,res)=>{
-    let id= parseInt(req.params.id);
-    contenedor.deleteCarrito(id).then(result=>{
+    let id = parseInt(req.params.id);
+    contenedor.deleteCarritoId(id).then(result=>{
         res.send(result)
     })
 })
 
 router.delete('/:cid/products/:pid', (req, res) => {
-    const cartId = Number(req.params.id)
-    const productId = Number(req.params.productId)
+    const cartId = parseInt(req.params.id)
+    const productId = parseInt(req.params.productId)
     contenedor.deleteProd(cartId, productId).then(result => {
         if (result.status === 'success') res.status(200).json(result)
         else res.status(500).send(result)

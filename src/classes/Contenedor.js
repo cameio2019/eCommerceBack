@@ -117,29 +117,45 @@ class Contenedor{
     //crear carrtio
     async crearCarrito(){
         try{
-            let data = await fs.promises.readFile('./files/carrito.txt','utf-8');
-            let carts = []
-            const cart = {
-                id: 1,
-                timestamp: Date.now(),
-                products: []
+        let data =await fs.promises.readFile('./files/carrito.txt','utf-8');
+        let nCart=JSON.parse(data);           
+        let nId = nCart[nCart.length-1].id+1;            
+        if (nCart.some(res=>res.id===nId)){ 
+            return {status:"error",message:"Error..Carrito repetido. "}
+        }else{
+            let timestamp = Date.now();
+            let time = new Date(timestamp);
+            let cart = {
+                id:nId,
+                timestamp:time,
+                products:[]
+            }                                
+            nCart.push(cart);
+            try{
+                await fs.promises.writeFile('./files/carrito.txt',JSON.stringify(nCart,null,2));                                        
+                return {status:"success",message:`Carrito creado satisfactoriamente con el ID ${cart.id}`}
+
+            }catch(err){
+                return {status:"error",message:"No se pudo crear el carrito solicitado :("}
             }
-            if (data) {
-                carts = JSON.parse(data)
-                const idS = carts.map(c => c.id)
-                const maxId = Math.max(...idS)
-                cart.id = maxId + 1
-            }
-    
-            carts = [...carts, cart]
-    
-            await fs.promises.writeFile('./files/carrito.txt', JSON.stringify(carts, null, 2))
-            return { status: 'success', message: `Carrito creado satisfactoriamente con el ID ${cart.id}` }
-    } catch (err) {
-            console.log(`Create cart error: ${err.message}`)
-            return { status: 'error', message: 'Error al crear el carrito.' }
+        }             
+    }catch{             
+        let timestamp = Date.now();
+        let time = new Date(timestamp);
+        let cart = {
+            id:1,
+            timestamp:time,
+            products:[]                
+        }    
+        try {
+            await fs.promises.writeFile('./files/carrito.txt',JSON.stringify([cart]),null,2) 
+            return {status:"success",message:"carrito creado",id:cart.id}
+        }catch(err){
+            return {status:"error",message:"No se pudo crear el archivo"}
+        }
     }
 }
+
 
     //mostrar el carrito    OK
     async getCarrito(){
@@ -158,8 +174,9 @@ class Contenedor{
             let data = await fs.promises.readFile('./files/carrito.txt','utf-8');
             let carrs = JSON.parse(data);
             let carr = carrs.find(c => c.id===id)
+            const products = carr.products
             if(carr){
-                return {status:"success", payload:carr}
+                return {status:"success", payload:products}
             }else{
                 return {status:"error",message:"Carrito no encontrado."}
             }
@@ -189,9 +206,9 @@ class Contenedor{
                 cart
             ]
             await fs.promises.writeFile('./files/carrito.txt', JSON.stringify(carts, null, 2))
-            return { status: 'success', payload: 'Producrto agregado  correctamente.' }
+            return { status: 'success', payload: 'Producto agregado  correctamente.' }
         } catch (err) {
-            console.log(`Product add error: ${err.message}`)
+            console.log(`error: ${err.message}`)
             return { status: 'error', message: 'Error al agregar el producto.' }
     }
 
@@ -231,38 +248,54 @@ class Contenedor{
     }
 
     //borrar prod por id
-    async deleteCarrito(id){
+    async deleteCarritoId(nid){
+
         try{
+            let nCart = JSON.parse(data); 
             let data = await fs.promises.readFile('./files/carrito.txt','utf-8');
-            let carrs = JSON.parse(data);
-            if(!carrs.some(ca=>ca.id===id)) return {status:"error", message:"No hay ningún carrito con el id dado."}
-            let carr = carrs.find(ca=>ca.id===id);
-            if(carr){
-                try{
-                    let cartData = await fs.promises.readFile('./files/carrito.txt','utf-8');
-                    let cart = JSON.parse(cartData);
-                    cart.forEach(cart=>{
-                        if(cart.id===id){
-                            delete cart['id']
-                        }
-                    })
-                    await fs.promises.writeFile('./files/carrito.txt',JSON.stringify(cart,null,2));
-                }catch{
-                    return {status:"error", message:"Fallo al eliminar el carrito."}
-                }
-            }
-            let aux = cart.filter(pr=>pr.id!==id);
-            try{
-                await fs.promises.writeFile('./files/carrito.txt',JSON.stringify(aux,null,2));
-                return {status:"success",message:"Carrito eliminado"}
-            }catch{
-                return {status:"error", message:"No se pudo eliminar el carrito."}
-            }
-        }
-        catch{
-            return {status:"error",message:"Error al eliminar el carrito."}
+            let cart = nCart.find(res=>res.id===nid);
+            if (cart){
+                let nCartUpdate = nCart.filter((p)=>p.id!=nid)                           
+                await fs.promises.writeFile('./files/carrito.txt',JSON.stringify(nCartUpdate),null,2)                 
+                return {status:"success",message:"El carrito fue eliminado."} 
+            }else{
+                return {status:"error",message:"No existe el carrito ha eliminar."}           
+            }         
+        }catch(err){
+            return {status:"error",message:err}
         }
     }
+    //     try{
+    //         let data = await fs.promises.readFile('./files/carrito.txt','utf-8');
+    //         let carrs = JSON.parse(data);
+    //         if(!carrs.some(ca=>ca.id===id)) return {status:"error", message:"No hay ningún carrito con el id dado."}
+    //         let carr = carrs.find(ca=>ca.id===id);
+    //         if(carr){
+    //             try{
+    //                 let cartData = await fs.promises.readFile('./files/carrito.txt','utf-8');
+    //                 let cart = JSON.parse(cartData);
+    //                 cart.forEach(cart=>{
+    //                     if(cart.id===id){
+    //                         delete cart['id']
+    //                     }
+    //                 })
+    //                 await fs.promises.writeFile('./files/carrito.txt',JSON.stringify(cart,null,2));
+    //             }catch{
+    //                 return {status:"error", message:"Fallo al eliminar el carrito."}
+    //             }
+    //         }
+    //         let aux = cart.filter(pr=>pr.id!==id);
+    //         try{
+    //             await fs.promises.writeFile('./files/carrito.txt',JSON.stringify(aux,null,2));
+    //             return {status:"success",message:"Carrito eliminado"}
+    //         }catch{
+    //             return {status:"error", message:"No se pudo eliminar el carrito."}
+    //         }
+    //     }
+    //     catch{
+    //         return {status:"error",message:"Error al eliminar el carrito."}
+    //     }
+    // }
 }
 
 export default Contenedor;
