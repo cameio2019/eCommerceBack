@@ -126,15 +126,14 @@ class Contenedor{
             }
             if (data) {
                 carts = JSON.parse(data)
-                const id = carts.map(c => c.id)
-                const maxId = Math.max(...id)
+                const idS = carts.map(c => c.id)
+                const maxId = Math.max(...idS)
                 cart.id = maxId + 1
-                // let id = carts[carts.length-1].id+1;
             }
     
             carts = [...carts, cart]
     
-            await fs.promises.writeFile('./files/carrito.txt', JSON.stringify([carts], null, 2))
+            await fs.promises.writeFile('./files/carrito.txt', JSON.stringify(carts, null, 2))
             return { status: 'success', message: `Carrito creado satisfactoriamente con el ID ${cart.id}` }
     } catch (err) {
             console.log(`Create cart error: ${err.message}`)
@@ -172,8 +171,7 @@ class Contenedor{
     //add al carrito
     async addProd(cid,pid){
         try{
-            if (!cid || !pid) throw new Error('Missing \'cartId\' or \'productId\' falta parametro!')
-            const productsF = await fs.promises.readFile('src/files/products.txt', 'utf-8')
+            const productsF = await fs.promises.readFile('./files/products.txt', 'utf-8')
             if (!products) throw new Error('no se encuentra el producto.')
             const products = JSON.parse(productsF)
             const product = products.find(p => p.id === pid)
@@ -190,7 +188,7 @@ class Contenedor{
                 ...carts,
                 cart
             ]
-            await fs.promises.writeFile('src/files/carrito.txt', JSON.stringify(carts, null, 2))
+            await fs.promises.writeFile('./files/carrito.txt', JSON.stringify(carts, null, 2))
             return { status: 'success', payload: 'Producrto agregado  correctamente.' }
         } catch (err) {
             console.log(`Product add error: ${err.message}`)

@@ -1,52 +1,17 @@
 [
-  [
-    [
-      [
-        [
-          {
-            "posProd": false
-          },
-          {
-            "timestamp": 1638997608303,
-            "products": []
-          },
-          {
-            "id": 3,
-            "timestamp": 1639001137606,
-            "products": []
-          },
-          {
-            "id": null,
-            "timestamp": 1639089574368,
-            "products": []
-          },
-          {
-            "id": null,
-            "timestamp": 1639089832489,
-            "products": []
-          },
-          {
-            "id": null,
-            "timestamp": 1639090091522,
-            "products": []
-          }
-        ],
-        {
-          "id": 1,
-          "timestamp": 1639090331306,
-          "products": []
-        }
-      ],
-      {
-        "id": 1,
-        "timestamp": 1639090350988,
-        "products": []
-      }
-    ],
-    {
-      "id": null,
-      "timestamp": 1639101918985,
-      "products": []
-    }
-  ]
+  {
+    "id": 1,
+    "timestamp": 1639106730430,
+    "products": []
+  },
+  {
+    "id": 2,
+    "timestamp": 1639106732363,
+    "products": []
+  },
+  {
+    "id": 3,
+    "timestamp": 1639106732946,
+    "products": []
+  }
 ]

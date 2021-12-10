@@ -18,7 +18,7 @@ router.get('/',(req,res)=>{
     })
 })
 router.get('/:cid',(req,res)=>{
-    let id = parseInt(req.params.cid);
+    let id = parseInt(req.params.id);
     contenedor.getCarrById(id).then(result=>{
         res.send(result);
     })
@@ -52,8 +52,8 @@ router.put('/:cid/products',(req,res)=>{
     })
 })
 //DELETE
-router.delete('/:cid',(req,res)=>{
-    let id= parseInt(req.params.cid);
+router.delete('/:id',(req,res)=>{
+    let id= parseInt(req.params.id);
     contenedor.deleteCarrito(id).then(result=>{
         res.send(result)
     })
