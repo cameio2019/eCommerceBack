@@ -66,16 +66,5 @@
     "code": "2222",
     "timestamp": "",
     "thumbnail": "http://localhost:8080/images/1638540598216ShampooInforcer.jpg"
-  },
-  {
-    "id": 16,
-    "name": "bbbb",
-    "title": "shampoo",
-    "price": "2222",
-    "stock": "2",
-    "description": "bbbbbb",
-    "code": "3333",
-    "timestamp": "",
-    "thumbnail": "http://localhost:8080/images/1638540957231ShampooAbsolutRepair.jpg"
   }
 ]

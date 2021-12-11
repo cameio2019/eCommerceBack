@@ -1,4 +1,3 @@
-
 document.addEventListener('submit',sendForm);
 
 function sendForm(e){
@@ -17,7 +16,6 @@ function sendForm(e){
             icon:'success',
             timer:3000,
         }).then(result=>{
-            // location.href='/'
         })
     })
 }
@@ -31,18 +29,6 @@ document.getElementById("thumbnail").onchange = (e)=>{
     
     read.readAsDataURL(e.target.files[0])
 }
-
-document.getElementById("timestamp").onchange = (e)=>{
-    let timestamp = Date.now();
-    read.onload = e =>{
-        document.getElementById("timestamp").src = e.target.result;
-    }
-    timestamp.readAsDataURL(e.target.files[0])
-}
-
-
-
-
 
 const socket = io(); //instanciamos io
 
