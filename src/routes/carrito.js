@@ -38,10 +38,10 @@ router.post('/', (req, res) => {
     console.log()
 })
 
-//POST add prod al carrito
-router.post('/:cid/products/:pid', (req, res) => {
+//POST add prod al carrito OK
+router.post('/:cid/products/', (req, res) => {
     let cartId = parseInt(req.params.cid)
-    let productId = req.body.pid
+    let productId = parseInt(req.body.id)
     contenedor.addProduct(cartId, productId)
     .then(result => res.send(result))
 })
@@ -64,7 +64,7 @@ router.delete('/:cid',(req,res)=>{
 
 router.delete('/:cid/products/:pid', (req, res) => {
     let cartId = parseInt(req.params.cid)
-    let prodId = parseInt(req.params.pid)
+    let prodId = req.params.pid
     contenedor.deleteProduct(cartId, prodId)
     .then(result => res.send(result))
 })

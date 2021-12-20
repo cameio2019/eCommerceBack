@@ -78,8 +78,8 @@ class CarritotContainer {
                 carts.splice(index, 1)
                 try{
                     await fs.promises.writeFile(cartsURL, JSON.stringify(carts, null, 2))
-                    console.log(`carrito ${borrarCart.id} eliminado.`)
-                    return {status:"success",message:`carrito ${borrarCart.id} eliminado correctamente.`}
+                    console.log(`Carrito ${borrarCart.id} eliminado.`)
+                    return {status:"success",message:`Carrito ${borrarCart.id} eliminado correctamente.`}
                 }
                 catch(err){
                     console.log(err)
@@ -138,6 +138,9 @@ class CarritotContainer {
         catch(err){
             return {status:"error", message:`Error al agregar el ${id_prod} en Carrito ${id}: ${err}`}
         }
+
+
+        
         // try {
         //     let cartsData = await fs.promises.readFile(cartsURL,"utf-8")
         //     let carts = JSON.parse(cartsData)

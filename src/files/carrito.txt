@@ -1,39 +1,42 @@
 [
   {
-    "id": 1,
-    "timestamp": "2021-12-19T00:05:36.752Z",
-    "products": [
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null
-    ]
-  },
-  {
-    "id": 1,
-    "timestamp": "2021-12-19T00:05:36.752Z",
-    "products": [
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null
-    ]
-  },
-  {
     "id": 2,
     "timestamp": "2021-12-19T00:06:20.896Z",
-    "products": []
+    "products": [
+      {
+        "id": 1,
+        "name": "testBIS",
+        "description": "un lindo shampoo",
+        "code": "223",
+        "price": "12345",
+        "thumbnail": "http://localhost:8080/images/1639854116790ShampooInforcer.jpg",
+        "stock": "2"
+      },
+      {
+        "id": 1,
+        "name": "testBIS",
+        "description": "un lindo shampoo",
+        "code": "223",
+        "price": "12345",
+        "thumbnail": "http://localhost:8080/images/1639854116790ShampooInforcer.jpg",
+        "stock": "2"
+      }
+    ]
   },
   {
     "id": 3,
     "timestamp": "2021-12-19T00:06:22.256Z",
-    "products": []
+    "products": [
+      {
+        "id": 1,
+        "name": "testBIS",
+        "description": "un lindo shampoo",
+        "code": "223",
+        "price": "12345",
+        "thumbnail": "http://localhost:8080/images/1639854116790ShampooInforcer.jpg",
+        "stock": "2"
+      }
+    ]
   },
   {
     "id": 4,
