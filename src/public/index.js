@@ -33,11 +33,11 @@ document.getElementById("thumbnail").onchange = (e)=>{
 const socket = io(); //instanciamos io
 
 socket.on('getProd',data=>{
-    let products = data.payload;
+    // let products = data.payload;
     fetch('templates/productsTables.handlebars').then(string=>string.text()).then(template=>{
         const processTemplate = Handlebars.compile(template);
         const templateObj={
-            products:products
+            products:data
         }   
         const html = processTemplate(templateObj);
         let div = document.getElementById('productsTables');

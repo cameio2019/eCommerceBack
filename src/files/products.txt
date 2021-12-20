@@ -1,70 +1,21 @@
 [
   {
-    "id": 7,
-    "name": "test11",
-    "title": "gel",
-    "price": "2222",
-    "thumbnail": "http://localhost:8080/images/1638042834089AmpollaPowerdoseRepair.jpg"
+    "id": 1,
+    "name": "testBIS",
+    "description": "un lindo shampoo",
+    "code": "223",
+    "price": "12345",
+    "thumbnail": "http://localhost:8080/images/1639854116790ShampooInforcer.jpg",
+    "stock": "2"
   },
   {
-    "id": 9,
-    "name": "prodDef",
-    "title": "shampoo",
-    "price": "12121",
-    "thumbnail": "http://localhost:8080/images/1638043103448ShampooInforcer.jpg"
-  },
-  {
-    "id": 10,
-    "name": "Crema2",
-    "title": "crema",
-    "price": "2034",
-    "thumbnail": "http://localhost:8080/images/1638045374964MascaraAbsolutRepair.jpg"
-  },
-  {
-    "id": 11,
-    "name": "CREMA3",
-    "title": "crema",
-    "price": "2345",
-    "thumbnail": "http://localhost:8080/images/1638141103814wildstilers.jpg"
-  },
-  {
-    "id": 12,
-    "name": "sham6",
-    "title": "shampoo",
-    "price": "1212",
-    "stock": "4",
-    "thumbnail": "http://localhost:8080/images/1638536107339ShampooInforcer.jpg"
-  },
-  {
-    "id": 13,
-    "name": "shamp000",
-    "title": "shampoo",
-    "price": "1212",
-    "stock": "5",
-    "description": "shamnEW",
-    "code": "1212",
-    "thumbnail": "http://localhost:8080/images/1638536596318ShampooAbsolutRepair.jpg"
-  },
-  {
-    "id": 14,
-    "name": "shm9999",
-    "title": "shampoo",
-    "price": "1212",
-    "stock": "2",
-    "description": "test",
-    "code": "3333",
-    "timestamp": "",
-    "thumbnail": "http://localhost:8080/images/1638537180267MarulaOil.jpg"
-  },
-  {
-    "id": 15,
-    "name": "testAAA",
-    "title": "gel",
-    "price": "2222",
-    "stock": "2",
-    "description": "AAAA",
-    "code": "2222",
-    "timestamp": "",
-    "thumbnail": "http://localhost:8080/images/1638540598216ShampooInforcer.jpg"
+    "id": 2,
+    "timestamp": 1639870104009,
+    "name": "TEST2",
+    "description": "TEST2",
+    "code": "223",
+    "price": "222",
+    "thumbnail": "http://localhost:8080/images/1639870103989mythicoil 2.jpg",
+    "stock": "3"
   }
 ]

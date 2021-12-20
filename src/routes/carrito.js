@@ -1,7 +1,7 @@
 import express from 'express';
-import Contenedor from '../classes/Contenedor.js';
+import CarritotContainer from '../classes/CarritotContainer.js';
 const router = express.Router();
-const contenedor  = new Contenedor();
+const contenedor  = new CarritotContainer();
 
 
 //log
@@ -12,37 +12,38 @@ router.use((req,res,next)=>{
     next()
 })
 //GETS
-router.get('/',(req,res)=>{
-    contenedor.getCarrito().then(result=>{
-        res.send(result);
-    })
-})
-router.get('/:id',(req,res)=>{
-    let id = parseInt(req.params.id);
-    contenedor.getCarrById(id).then(result=>{
+// router.get('/',(req,res)=>{
+//     contenedor.getCarrito().then(result=>{
+//         res.send(result);
+//     })
+// })
+// router.get('/:id',(req,res)=>{
+//     let id = parseInt(req.params.id);
+//     contenedor.getCarrById(id).then(result=>{
+//         res.send(result);
+//     })
+// })
+//OK
+router.get('/:cid/products',(req,res)=>{
+    let id = parseInt(req.params.cid);
+    contenedor.getProductsByCartId(id).then(result=>{
         res.send(result);
     })
 })
 
-//POSTS crear carrito
-router.post('/',(req,res)=>{
-    let carr = req.body;
-    console.log(carr);
-    contenedor.crearCarrito(carr).then(result=>{
-        res.send(result);
-    })
+//POSTS crear carrito OK
+router.post('/', (req, res) => {
+    contenedor.createCart()
+    .then(result => res.send(result))
+    console.log()
 })
 
 //POST add prod al carrito
-router.post('/:id/products/:pid',async (req, res) => {
-    const cid = parseInt(req.params.id)
-    const pid = parseInt(req.params.products)
-    const cartupd = await contenedor.addProd(cid, pid)
-        if(cartupd){
-            res.send(cartupd)
-        }  else{
-            res.status(404).send({error:'Disulpa, Carrito no encontrado.'})
-        }  
+router.post('/:cid/products/:pid', (req, res) => {
+    let cartId = parseInt(req.params.cid)
+    let productId = req.body.pid
+    contenedor.addProduct(cartId, productId)
+    .then(result => res.send(result))
 })
 
 // //PUTS 
@@ -54,27 +55,19 @@ router.post('/:id/products/:pid',async (req, res) => {
 //     })
 // })
 
-//DELETE
-router.delete('/',(req,res)=>{
-    contenedor.delAllCart().then(result=>{
-        res.send(result)
-    })
-})
-
-router.delete('/:id',(req,res)=>{
-    let id = parseInt(req.params.id);
-    contenedor.deleteCarritoId(id).then(result=>{
-        res.send(result)
-    })
+//DELETE OK
+router.delete('/:cid',(req,res)=>{
+    let id = parseInt(req.params.cid)
+    contenedor.deleteById(id)
+    .then(result => res.send(result))
 })
 
 router.delete('/:cid/products/:pid', (req, res) => {
-    const cartId = parseInt(req.params.id)
-    const productId = parseInt(req.params.productId)
-    contenedor.deleteProd(cartId, productId).then(result => {
-        if (result.status === 'success') res.status(200).json(result)
-        else res.status(500).send(result)
-    })
+    let cartId = parseInt(req.params.cid)
+    let prodId = parseInt(req.params.pid)
+    contenedor.deleteProduct(cartId, prodId)
+    .then(result => res.send(result))
 })
+
 
 export default router;
