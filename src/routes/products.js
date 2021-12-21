@@ -21,7 +21,7 @@ router.get('/id?', (req, res) => {
         if(result !== null){
             res.send(result);
         } else{
-            res.send({ error : 'producto no encontrado' })
+            res.send({ error : 'Producto no encontrado.' })
         }
     })
 })

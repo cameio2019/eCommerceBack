@@ -64,7 +64,7 @@ router.delete('/:cid',(req,res)=>{
 
 router.delete('/:cid/products/:pid', (req, res) => {
     let cartId = parseInt(req.params.cid)
-    let prodId = req.params.pid
+    let prodId = parseInt(req.params.pid)
     contenedor.deleteProduct(cartId, prodId)
     .then(result => res.send(result))
 })

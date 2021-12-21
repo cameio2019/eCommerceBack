@@ -10,11 +10,10 @@
   },
   {
     "id": 2,
-    "timestamp": 1639870104009,
     "name": "TEST2",
     "description": "TEST2",
     "code": "223",
-    "price": "222",
+    "price": "2223456",
     "thumbnail": "http://localhost:8080/images/1639870103989mythicoil 2.jpg",
     "stock": "3"
   }

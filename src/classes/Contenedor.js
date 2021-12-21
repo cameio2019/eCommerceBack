@@ -1,5 +1,6 @@
 import fs from 'fs';
 import __dirname from '../utils.js';
+// const productsURL = __dirname+'/files/products.txt'
 
 class Contenedor {
     constructor(archiveName){
