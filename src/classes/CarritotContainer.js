@@ -7,27 +7,6 @@ const productsURL = __dirname+'/files/products.txt'
 class CarritotContainer {
     
     async createCart(){
-        // try{
-        //     let data = await fs.promises.readFile(cartsURL, 'utf-8')
-        //     let carts = JSON.parse(data)
-        //     let cart = {
-        //         id: carts.length + 1, 
-        //         cartTimestamp: Date.now(),
-        //         products:[]
-        //     }
-        //     carts.push(cart)
-        //     try{
-        //         await fs.promises.writeFile(cartsURL, JSON.stringify(carts, null, 2))
-        //         return {status:"success", message:`Carrito creado satisfactoriamente con el ID ${cart.id}`}
-        //     }
-        //     catch(err){
-        //         return {status:"error", message:`Error al crear el carrito.`}
-        //     }
-        // }
-        // catch(err){
-        //     console.log(`No se pudo crear el carrito.: ${err}`)
-        //     return {status:"error", message:`Error al crear el carrito: ${err}`}
-        // }
         try{
             let data =await fs.promises.readFile(cartsURL,'utf-8');
             let nCart=JSON.parse(data);           
@@ -138,38 +117,6 @@ class CarritotContainer {
         catch(err){
             return {status:"error", message:`Error al agregar el ${id_prod} en Carrito ${id}: ${err}`}
         }
-
-
-        
-        // try {
-        //     let cartsData = await fs.promises.readFile(cartsURL,"utf-8")
-        //     let carts = JSON.parse(cartsData)
-        //     const cart = carts.find(cart => cart.id == id)
-        //     if (cart) {
-        //         try {
-        //             let productsData = await fs.promises.readFile(productsURL,"utf-8")
-        //             let products = JSON.parse(productsData)
-        //             const product = products.find(product => product.id == id_prod)
-        //             if (product) {
-        //                 cart.products.push(product)
-        //                 try {
-        //                     await fs.promises.writeFile(cartsURL, JSON.stringify(carts,null,2))
-        //                     return {status:"success",message:`Producto ${id_prod} agregado al carrito ${id} !`}
-        //                 } catch {
-        //                     return {status:"error",message:"No se pudo agregar el producto al carrito: "+err}
-        //                 }
-        //             } else { 
-        //                 return {status: "error" , message: "No se encontró el producto"}
-        //             }
-        //         } catch { 
-        //             return {status:"error",message:"No se encontró el producto: "+err}
-        //         }
-        //     } else { 
-        //         return {status: "error" , message: "No se encontró el carrito"}
-        //     }
-        // } catch (err) {
-        //     return {status:"error",message:"No se encontró el producto: "+err}
-        // }
     }
 
     async deleteProduct(idNumber, productId){
