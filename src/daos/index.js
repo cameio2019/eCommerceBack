@@ -1,28 +1,29 @@
-let productosDao
-let carritosDao
+let productosDao;
+let carritosDao;
+let persistence = "mongodb";
 
-switch (process.env.PERS) {
-    // case 'json':
-    //     const { default: ProductosDaoArchivo } = await import('./productos/ProductosDaoArchivo.js')
-    //     const { default: CarritosDaoArchivo } = await import('./carritos/CarritosDaoArchivo.js')
+switch (persistence) {
+    case 'fileSystem':
+        const {default: ProductosDaofileSystem} = await import('./products/ProductosDaofileSystem.js')
+        const {default: CarritoDaofileSystem} = await import('./carts/CarritoDaofileSystem.js')
 
-    //     productosDao = new ProductosDaoArchivo()
-    //     carritosDao = new CarritosDaoArchivo()
-    //     break
+        productosDao = new ProductosDaofileSystem();
+        carritosDao = new CarritoDaofileSystem();
+        break;
     case 'firebase':
-        const { default: ProductosDaoFirebase } = await import('./productos/ProductosDaoFirebase.js')
-        const { default: CarritosDaoFirebase } = await import('./carritos/CarritosDaoFirebase.js')
+        const { default: ProductosDaoFirebase } = await import('./products/ProductosDaoFirebase.js')
+        const { default: CarritosDaoFirebase } = await import('./carts/CarritosDaoFirebase.js')
 
         productosDao = new ProductosDaoFirebase()
         carritosDao = new CarritosDaoFirebase()
-        break
+        break;
     case 'mongodb':
-        const { default: ProductosDaoMongoDb } = await import('./productos/ProductosDaoMongoDb.js')
-        const { default: CarritosDaoMongoDb } = await import('./carritos/CarritosDaoMongoDb.js')
+        const { default: ProductosDaoMongoDb } = await import('./products/ProductosDaoMongoDb.js')
+        const { default: CarritosDaoMongoDb } = await import('./carts/CarritosDaoMongoDb.js')
 
-        productosDao = new ProductosDaoMongoDb()
-        carritosDao = new CarritosDaoMongoDb()
-        break
+        productosDao = new ProductosDaoMongoDb();
+        carritosDao = new CarritosDaoMongoDb();
+        break;
 }
 
 export { productosDao, carritosDao }

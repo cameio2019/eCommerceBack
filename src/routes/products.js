@@ -3,20 +3,21 @@ import Contenedor from '../classes/Contenedor.js';
 import upload from '../services/uploader.js';
 import {io} from '../app.js';
 import { authAdmin }  from '../utils.js'
+import {productosDao} from '../daos/index.js'
 
 const router = express.Router();
 const contenedor  = new Contenedor('products');
 
 //GETS OK
 router.get('/',(req,res)=>{
-    contenedor.getAll().then(result=>{
+    productosDao.getAll().then(result=>{
         res.send(result);
     })
 })
 
 router.get('/id?', (req, res) => {
     let pid = parseInt(req.query.id)
-    contenedor.getById(pid)
+    productosDao.getById(pid)
     .then(result=>{
         if(result !== null){
             res.send(result);
@@ -28,7 +29,7 @@ router.get('/id?', (req, res) => {
 
 router.get('/:pid', (req, res) => {
     let id = parseInt(req.params.pid);
-    contenedor.getById(id)
+    productosDao.getById(id)
     .then(result=>{
         if(result !== null){
             res.send(result);
@@ -43,10 +44,10 @@ router.post('/',upload.single('thumbnail'),authAdmin,(req,res)=>{
     let file = req.file;
     let prod = req.body;
     prod.thumbnail = req.protocol+"://"+req.hostname+":8080"+'/images/'+file.filename;
-    contenedor.save(prod).then(result=>{
+    productosDao.save(prod).then(result=>{
         res.send(result);
         if(result.status==="success"){
-            contenedor.getAll().then(result=>{
+            productosDao.getAll().then(result=>{
                 console.log(result);
             io.emit('getProd',result);
             })
@@ -58,7 +59,7 @@ router.post('/',upload.single('thumbnail'),authAdmin,(req,res)=>{
 router.put('/:pid', authAdmin, (req,res) => {
     let body = req.body;
     let id = parseInt(req.params.pid)
-    contenedor.updateProduct(id,body).then(result=>{
+    productosDao.updateProduct(id,body).then(result=>{
         res.send(result);
     })
 })
@@ -66,13 +67,13 @@ router.put('/:pid', authAdmin, (req,res) => {
 //DELETES OK
 router.delete('/:pid', authAdmin,(req,res)=>{
     let id= parseInt(req.params.pid);
-    contenedor.deleteById(id).then(result=>{
+    productosDao.deleteById(id).then(result=>{
         res.send(result)
     })
 })
 
 // router.delete('/', authAdmin,(req,res)=>{
-//     contenedor.deleteAll().then(result=>{
+//     productosDao.deleteAll().then(result=>{
 //         res.send(result)
 //     })
 // })

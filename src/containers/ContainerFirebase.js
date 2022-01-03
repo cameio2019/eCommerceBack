@@ -13,7 +13,7 @@ class ContenedorFirebase {
         this.coleccion = db.collection(products)
     }
 
-    async listar(id) {
+    async getById(id) {
         try {
             const doc = await this.coleccion.doc(id).get();
             if (!doc.exists) {
@@ -27,7 +27,7 @@ class ContenedorFirebase {
         }
     }
 
-    async listarAll() {
+    async getAll() {
         try {
             const result = []
             const snapshot = await this.coleccion.get();
@@ -40,7 +40,7 @@ class ContenedorFirebase {
         }
     }
 
-    async guardar(nuevoElem) {
+    async save(nuevoElem) {
         try {
             const guardado = await this.coleccion.add(nuevoElem);
             return { ...nuevoElem, id: guardado.id }
@@ -49,7 +49,7 @@ class ContenedorFirebase {
         }
     }
 
-    async actualizar(nuevoElem) {
+    async updateProduct(nuevoElem) {
         try {
             const actualizado = await this.coleccion.doc(nuevoElem.id).set(nuevoElem);
             return actualizado
@@ -58,7 +58,7 @@ class ContenedorFirebase {
         }
     }
 
-    async borrar(id) {
+    async deleteById(id) {
         try {
             const item = await this.coleccion.doc(id).delete();
             return item
@@ -67,9 +67,9 @@ class ContenedorFirebase {
         }
     }
 
-    async borrarAll() {
+    async deleteAll() {
         try {
-            const docs = await this.listarAll()
+            const docs = await this.deleteAll()
             const ids = docs.map(d => d.id)
             const promesas = ids.map(id => this.borrar(id))
             const resultados = await Promise.allSettled(promesas)

@@ -1,19 +1,20 @@
-import * as path from "path";
-import dotenv from 'dotenv'
-dotenv.config()
+import __dirname from '../utils.js'
+// // import config from '.'
+// import * as path from "path";
+// import dotenv from 'dotenv'
+// dotenv.config()
 
 export default {
-// fileSystem: {
-//     productsPath: path.resolve(__dirname, "../data", "products.txt"),
-//     cartsPath: path.resolve(__dirname, "../data", "carito.txt"),
-// },
+fileSystem: {
+    baseUrl:__dirname+'/files/'
+},
 mongodb: {
-    cnxStr: 'mongodb://localhost:27017/ecommerce',
+    baseUrl: 'mongodb+srv://admineze:UMC2yam.bqa2wdp8pkt@ecommercecoderhosuse.8sh6m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     options: {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         //useCreateIndex: false,
-        serverSelectionTimeoutMS: 5000,
+        // serverSelectionTimeoutMS: 5000,
     },
 },
 firebase: {

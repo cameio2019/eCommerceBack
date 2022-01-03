@@ -2,6 +2,7 @@ import express from 'express';
 import CarritotContainer from '../classes/CarritotContainer.js';
 const router = express.Router();
 const contenedor  = new CarritotContainer();
+import {carritosDao} from '../daos/index.js'
 
 
 //log
@@ -26,14 +27,14 @@ router.use((req,res,next)=>{
 //OK
 router.get('/:cid/products',(req,res)=>{
     let id = parseInt(req.params.cid);
-    contenedor.getProductsByCartId(id).then(result=>{
+    carritosDao.getProductsByCartId(id).then(result=>{
         res.send(result);
     })
 })
 
 //POSTS crear carrito OK
 router.post('/', (req, res) => {
-    contenedor.createCart()
+    carritosDao.createCart()
     .then(result => res.send(result))
     console.log()
 })
@@ -42,7 +43,7 @@ router.post('/', (req, res) => {
 router.post('/:cid/products/', (req, res) => {
     let cartId = parseInt(req.params.cid)
     let productId = parseInt(req.body.id)
-    contenedor.addProduct(cartId, productId)
+    carritosDao.addProduct(cartId, productId)
     .then(result => res.send(result))
 })
 
@@ -58,14 +59,14 @@ router.post('/:cid/products/', (req, res) => {
 //DELETE OK
 router.delete('/:cid',(req,res)=>{
     let id = parseInt(req.params.cid)
-    contenedor.deleteById(id)
+    carritosDao.deleteById(id)
     .then(result => res.send(result))
 })
 
 router.delete('/:cid/products/:pid', (req, res) => {
     let cartId = parseInt(req.params.cid)
     let prodId = parseInt(req.params.pid)
-    contenedor.deleteProduct(cartId, prodId)
+    carritosDao.deleteProduct(cartId, prodId)
     .then(result => res.send(result))
 })
 

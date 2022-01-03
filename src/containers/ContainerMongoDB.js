@@ -1,18 +1,18 @@
 import mongoose from 'mongoose'
 import config from '../config/db.js'
-import { asPOJO, renameField, removeField } from '../services/objectUtils.js'
+// import { asPOJO, renameField, removeField } from '../services/objectUtils.js'
 
-await mongoose.connect(config.mongodb.cnxStr, config.mongodb.options)
+await mongoose.connect(config.mongodb.baseUrl, config.mongodb.options)
 
-class ContenedorMongoDb {
+export default class ContenedorMongoDb{
 
-    constructor(nombreColeccion, esquema) {
-        this.coleccion = mongoose.model(nombreColeccion, esquema)
+    constructor(collection, schema, timestamps) {
+        this.coleccion = mongoose.model(collection,new mongoose.Schema(schema,timestamps))
     }
 
-    async listar(id) {
+    async getById(id) {
         try {
-            const docs = await this.coleccion.find({ '_id': id }, { __v: 0 })
+            const docs = await this.coleccion.find({ '_id': id })
             if (docs.length == 0) {
                 throw new Error('Error al listar por id: no encontrado')
             } else {
@@ -24,20 +24,18 @@ class ContenedorMongoDb {
         }
     }
 
-    async listarAll() {
+    getAll = async() =>{
         try {
-            let docs = await this.coleccion.find({}, { __v: 0 }).lean()
-            docs = docs.map(asPOJO)
-            docs = docs.map(d => renameField(d, '_id', 'id'))
-            return docs
+            let docs = await this.coleccion.find()
+            return {status:"success",payload:docs}
         } catch (error) {
-            throw new Error(`Error al listar todo: ${error}`)
+            return {status:"error",error:error}
         }
     }
 
-    async guardar(nuevoElem) {
+    async save(product) {
         try {
-            let doc = await this.coleccion.create(nuevoElem);
+            let doc = await this.coleccion.create(product);
             doc = asPOJO(doc)
             renameField(doc, '_id', 'id')
             removeField(doc, '__v')
@@ -47,7 +45,7 @@ class ContenedorMongoDb {
         }
     }
 
-    async actualizar(nuevoElem) {
+    async updateProduct(nuevoElem) {
         try {
             renameField(nuevoElem, 'id', '_id')
             const { n, nModified } = await this.coleccion.replaceOne({ '_id': nuevoElem._id }, nuevoElem)
@@ -63,7 +61,7 @@ class ContenedorMongoDb {
         }
     }
 
-    async borrar(id) {
+    async deleteById(id) {
         try {
             const { n, nDeleted } = await this.coleccion.deleteOne({ '_id': id })
             if (n == 0 || nDeleted == 0) {
@@ -74,7 +72,7 @@ class ContenedorMongoDb {
         }
     }
 
-    async borrarAll() {
+    async deleteAll() {
         try {
             await this.coleccion.deleteMany({})
         } catch (error) {
@@ -83,4 +81,3 @@ class ContenedorMongoDb {
     }
 }
 
-export default ContenedorMongoDb
