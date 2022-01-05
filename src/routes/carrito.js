@@ -1,8 +1,8 @@
 import express from 'express';
-import CarritotContainer from '../classes/CarritotContainer.js';
+// import CarritotContainer from '../classes/CarritotContainer.js';
 const router = express.Router();
-const contenedor  = new CarritotContainer();
-import {carritosDao} from '../daos/index.js'
+// const contenedor  = new CarritotContainer();
+import {carritosDao, persistence } from '../daos/index.js'
 
 
 //log
@@ -26,11 +26,21 @@ router.use((req,res,next)=>{
 // })
 //OK
 router.get('/:cid/products',(req,res)=>{
-    let id = parseInt(req.params.cid);
-    carritosDao.getProductsByCartId(id).then(result=>{
-        res.send(result);
-    })
+    // let id = parseInt(req.params.cid);
+    // carritosDao.getProductsByCartId(id).then(result=>{
+    //     res.send(result);
+    // })
+    let id;
+    if(persistence === "fileSystem"){
+        id = parseInt(req.params.cid)
+        
+    }else{
+        id = req.params.cid
+    }
+    carritosDao.getProductsByCartId(id)
+    .then(result => res.send(result))
 })
+
 
 //POSTS crear carrito OK
 router.post('/', (req, res) => {
@@ -41,8 +51,19 @@ router.post('/', (req, res) => {
 
 //POST add prod al carrito OK
 router.post('/:cid/products/', (req, res) => {
-    let cartId = parseInt(req.params.cid)
-    let productId = parseInt(req.body.id)
+    // let cartId = parseInt(req.params.cid)
+    // let productId = parseInt(req.body.id)
+    // carritosDao.addProduct(cartId, productId)
+    // .then(result => res.send(result))
+    let cartId;
+    let productId;
+    if(persistence === "fileSystem"){
+        cartId = parseInt(req.params.cid)
+        productId = parseInt(req.body.id)
+    }else{
+        cartId = req.params.cid
+        productId = req.body.id
+    }
     carritosDao.addProduct(cartId, productId)
     .then(result => res.send(result))
 })
@@ -58,17 +79,41 @@ router.post('/:cid/products/', (req, res) => {
 
 //DELETE OK
 router.delete('/:cid',(req,res)=>{
-    let id = parseInt(req.params.cid)
+    // let id = parseInt(req.params.cid)
+    // carritosDao.deleteById(id)
+    // .then(result => res.send(result))
+    let id;
+    if(persistence === "fileSystem"){
+        id = parseInt(req.params.cid)
+    }else{
+        id = req.params.cid
+    }
     carritosDao.deleteById(id)
     .then(result => res.send(result))
 })
 
 router.delete('/:cid/products/:pid', (req, res) => {
-    let cartId = parseInt(req.params.cid)
-    let prodId = parseInt(req.params.pid)
+    // let cartId = parseInt(req.params.cid)
+    // let prodId = parseInt(req.params.pid)
+    // carritosDao.deleteProduct(cartId, prodId)
+    // .then(result => res.send(result))
+    let cartId;
+    let prodId;
+    if(persistence === "fileSystem"){
+        cartId = parseInt(req.params.cid)
+        prodId = parseInt(req.params.pid)
+    }else{
+        cartId = req.params.cid
+        productId = req.params.pid
+    }
     carritosDao.deleteProduct(cartId, prodId)
     .then(result => res.send(result))
 })
 
+router.get('/', (req,res)=>{
+    carritosDao.getAll().then(result=>{
+        res.send(result)
+    })
+})
 
 export default router;

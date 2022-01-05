@@ -3,7 +3,7 @@ import Contenedor from '../classes/Contenedor.js';
 import upload from '../services/uploader.js';
 import {io} from '../app.js';
 import { authAdmin }  from '../utils.js'
-import {productosDao} from '../daos/index.js'
+import {productosDao, persistence} from '../daos/index.js'
 
 const router = express.Router();
 const contenedor  = new Contenedor('products');
@@ -16,14 +16,24 @@ router.get('/',(req,res)=>{
 })
 
 router.get('/id?', (req, res) => {
-    let pid = parseInt(req.query.id)
-    productosDao.getById(pid)
+    // let pid = parseInt(req.query.id)
+    // productosDao.getById(pid)
+    // .then(result=>{
+    //     if(result !== null){
+    //         res.send(result);
+    //     } else{
+    //         res.send({ error : 'Producto no encontrado.' })
+    //     }
+    // })
+    let id;
+    if(persistence === "fileSystem"){
+        id = parseInt(req.params.pid)
+    }else{
+        id = req.params.pid
+    }
+    productosDao.getById(id)
     .then(result=>{
-        if(result !== null){
-            res.send(result);
-        } else{
-            res.send({ error : 'Producto no encontrado.' })
-        }
+        res.send(result)
     })
 })
 
@@ -57,8 +67,18 @@ router.post('/',upload.single('thumbnail'),authAdmin,(req,res)=>{
 
 //PUT OK
 router.put('/:pid', authAdmin, (req,res) => {
+    // let body = req.body;
+    // let id = parseInt(req.params.pid)
+    // productosDao.updateProduct(id,body).then(result=>{
+    //     res.send(result);
+    // })
     let body = req.body;
-    let id = parseInt(req.params.pid)
+    let id;
+    if(persistence === "fileSystem"){
+        id = parseInt(req.params.pid)
+    }else{
+        id = req.params.pid
+    }
     productosDao.updateProduct(id,body).then(result=>{
         res.send(result);
     })
@@ -66,16 +86,25 @@ router.put('/:pid', authAdmin, (req,res) => {
 
 //DELETES OK
 router.delete('/:pid', authAdmin,(req,res)=>{
-    let id= parseInt(req.params.pid);
-    productosDao.deleteById(id).then(result=>{
+    // let id= parseInt(req.params.pid);
+    // productosDao.deleteById(id).then(result=>{
+    //     res.send(result)
+    // })
+    let id;
+    if(persistence === "fileSystem"){
+        id = parseInt(req.params.pid)
+    }else{
+        id = req.params.pid
+    }
+    productosDao.deleteById(id).then(result => {
         res.send(result)
     })
 })
 
-// router.delete('/', authAdmin,(req,res)=>{
-//     productosDao.deleteAll().then(result=>{
-//         res.send(result)
-//     })
-// })
+router.delete('/', authAdmin,(req,res)=>{
+    productosDao.deleteAll().then(result=>{
+        res.send(result)
+    })
+})
 
 export default router;

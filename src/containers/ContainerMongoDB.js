@@ -1,24 +1,32 @@
 import mongoose from 'mongoose'
 import config from '../config/db.js'
-// import { asPOJO, renameField, removeField } from '../services/objectUtils.js'
 
 await mongoose.connect(config.mongodb.baseUrl, config.mongodb.options)
 
 export default class ContenedorMongoDb{
-
     constructor(collection, schema, timestamps) {
         this.coleccion = mongoose.model(collection,new mongoose.Schema(schema,timestamps))
     }
 
     async getById(id) {
         try {
-            const docs = await this.coleccion.find({ '_id': id })
-            if (docs.length == 0) {
-                throw new Error('Error al listar por id: no encontrado')
-            } else {
-                const result = renameField(asPOJO(docs[0]), '_id', 'id')
-                return result
+            // const docs = await this.coleccion.find({ '_id': id })
+            // if (docs.length == 0) {
+            //     throw new Error('Error al listar por id: no encontrado')
+            // } else {
+            //     const result = renameField(asPOJO(docs[0]), '_id', 'id')
+            //     return result
+            // }
+            let document = await this.collection.findById(id)
+            
+            if(document){
+                return {status:"success", payload: document}
+            }else{
+                console.log(null)
+                return {status:"error", error: 'Object not found'}
             }
+            
+        
         } catch (error) {
             throw new Error(`Error al listar por id: ${error}`)
         }
@@ -27,7 +35,7 @@ export default class ContenedorMongoDb{
     getAll = async() =>{
         try {
             let docs = await this.coleccion.find()
-            return {status:"success",payload:docs}
+            return {status:"success", payload:docs}
         } catch (error) {
             return {status:"error",error:error}
         }
@@ -63,10 +71,9 @@ export default class ContenedorMongoDb{
 
     async deleteById(id) {
         try {
-            const { n, nDeleted } = await this.coleccion.deleteOne({ '_id': id })
-            if (n == 0 || nDeleted == 0) {
-                throw new Error('Error al borrar: no encontrado')
-            }
+            await this.collection.deleteOne({"_id": id})
+            return{status:"success", mesagge:`El id:${idNumber} fue eliminado.`}
+            
         } catch (error) {
             throw new Error(`Error al borrar: ${error}`)
         }
@@ -75,6 +82,7 @@ export default class ContenedorMongoDb{
     async deleteAll() {
         try {
             await this.coleccion.deleteMany({})
+            return{status:"success", mesagge:`Todos los elementos fueron eliminados`}
         } catch (error) {
             throw new Error(`Error al borrar: ${error}`)
         }

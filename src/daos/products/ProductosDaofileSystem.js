@@ -105,7 +105,7 @@ export default class ProductosDaofileSystem extends FileContainer{
         try{
             let data = await fs.promises.readFile(this.url, 'utf-8')
             let products =  JSON.parse(data)
-            return products
+            return {status:"success", payload:products}
         }
         catch(err){
             // console.log(`No existen los productos en ${__dirname}/files/${this.archiveName}.txt - ${err}`)
@@ -156,7 +156,7 @@ export default class ProductosDaofileSystem extends FileContainer{
                     console.log(err)
                 }
             }else{
-                console.log(`Error: no existe uelproducto con el Id solicitado.`)
+                console.log(`Error: no existe el producto con el Id solicitado.`)
                 return {status:"error", message:"Error: no existe un producto con ese ID."}
             }
             

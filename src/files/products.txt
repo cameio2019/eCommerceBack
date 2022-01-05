@@ -16,15 +16,5 @@
     "price": "2223456",
     "thumbnail": "http://localhost:8080/images/1639870103989mythicoil 2.jpg",
     "stock": "3"
-  },
-  {
-    "id": 3,
-    "timestamp": 1641241712404,
-    "name": "ababa",
-    "description": "TEST3",
-    "code": "456",
-    "price": "232",
-    "thumbnail": "http://localhost:8080/images/1641241712398MarulaOil.jpg",
-    "stock": "3"
   }
 ]

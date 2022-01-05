@@ -26,4 +26,4 @@ switch (persistence) {
         break;
 }
 
-export { productosDao, carritosDao }
+export { productosDao, carritosDao, persistence }
