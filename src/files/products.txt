@@ -16,5 +16,15 @@
     "price": "2223456",
     "thumbnail": "http://localhost:8080/images/1639870103989mythicoil 2.jpg",
     "stock": "3"
+  },
+  {
+    "id": 3,
+    "timestamp": 1641469297109,
+    "name": "testAgain",
+    "description": "testAgain",
+    "code": "4323",
+    "price": "232",
+    "thumbnail": "http://localhost:8080/images/1641469297102mythicoil.jpg",
+    "stock": "3"
   }
 ]

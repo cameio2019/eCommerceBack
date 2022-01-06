@@ -28,14 +28,14 @@ class CarritosDaoFirebase extends ContenedorFirebase {
 
     async addProduct(id, productId){
         try{
-            const cartDoc = await this.query.doc(id).get()
-            const cart = cartDoc.data()
+            const cartD = await this.query.doc(id).get()
+            const cart = cartD.data()
             const products = [...cart.products, productId]
             await this.query.doc(id).set({products})
-            return {status:"success", message:`Product added to cart`}
+            return {status:"success", message:`Producto agregado al carrito ${id}`}
         }catch(err){
             console.log(err)
-            return {status:"error", message:`Error to add product ${productId} in Cart ${idN}: ${err}`}
+            return {status:"error", message:`Error al agregar el Producto ${productId} en el carrito ${id}: ${err}`}
             
         }
     }
@@ -58,10 +58,10 @@ class CarritosDaoFirebase extends ContenedorFirebase {
             const products = cart.products.filter(prod => prod !== productId)
             await this.query.doc(id).set({ products: products})
 
-            return {status:"success", message:`product ${productId} deleted at cart ${id}`}
+            return {status:"success", message:`producto ${productId} eliminado del carrito ${id}`}
         }catch(err){
             console.log(err)
-            return {status:"error", message:`Error to delete product ${productId} in Cart ${id}: ${err}`}
+            return {status:"error", message:`Error al eliminar el  producto ${productId} en carrito ${id}: ${err}`}
             
         }
     }

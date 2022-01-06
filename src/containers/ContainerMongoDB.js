@@ -23,12 +23,12 @@ export default class ContenedorMongoDb{
                 return {status:"success", payload: document}
             }else{
                 console.log(null)
-                return {status:"error", error: 'Object not found'}
+                return {status:"error", error: 'Objecto no encontrado.'}
             }
             
         
         } catch (error) {
-            throw new Error(`Error al listar por id: ${error}`)
+            return{status:"error", error:`No se pudo obtener el Objeto con id:${id} en ${this.url} - ${error}`}
         }
     }
 
@@ -42,14 +42,20 @@ export default class ContenedorMongoDb{
     }
 
     async save(product) {
-        try {
-            let doc = await this.coleccion.create(product);
-            doc = asPOJO(doc)
-            renameField(doc, '_id', 'id')
-            removeField(doc, '__v')
-            return doc
-        } catch (error) {
-            throw new Error(`Error al guardar: ${error}`)
+        // try {
+        //     let doc = await this.coleccion.create(product);
+        //     doc = asPOJO(doc)
+        //     renameField(doc, '_id', 'id')
+        //     removeField(doc, '__v')
+        //     return doc
+        // } catch (error) {
+        //     throw new Error(`Error al guardar: ${error}`)
+        // }
+        try{
+            let result = await this.collection.create(product)
+            return {status: "success", payload:result}
+        }catch(err){
+            return {status:"error", error:err.message}
         }
     }
 
