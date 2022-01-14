@@ -9,4 +9,13 @@ export const authAdmin = (req,res,next)=>{
     else next();
 }
 
+function makeId() {
+    let id= ""
+    let characters = [ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890]
+    for (i=0; i<7; i++) {
+        id += characters[Math.floor(Math.random() * characters.length)]
+    }
+    return id
+}
+
 export default __dirname;

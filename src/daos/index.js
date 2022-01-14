@@ -1,6 +1,6 @@
 let productosDao;
 let carritosDao;
-let persistence = "firebase";
+let persistence = "mongo";
 
 switch (persistence) {
     case 'fileSystem':

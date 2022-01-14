@@ -117,6 +117,11 @@ io.on('connection', async socket => {
         io.emit('messagelog', await chatContainer.getAll())
         
     })
+    socket.on("clearLog", ()=> {
+        mensajes.clearLog().then(result=> {
+            io.emit("messagelog",result)
+        })
+    })
 })
 
 app.use('/*', (req,res)=> res.send({
