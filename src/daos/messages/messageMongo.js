@@ -1,14 +1,14 @@
 import { normalize, denormalize, schema } from "normalizr"
 import mongoose from "mongoose"
 
-mongoose.connect("mongodb+srv://rodrialisio:asd456@cluster0.a2jas.mongodb.net/ecommerce?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://admineze:UMC2yam.bqa2wdp8pkt@ecommercecoderhosuse.8sh6m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology:true
 })
 
 export default class MessageMongo {
     constructor () {
-        this.collection= mongoose.model("mensajes", mongoose.Schema({
+        this.collection= mongoose.model("messages", mongoose.Schema({
             author:{
                 id:{type:String,required:true},
                 nombre:{type:String,required:true},
