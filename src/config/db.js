@@ -9,7 +9,7 @@ fileSystem: {
     baseUrl:__dirname+'/files/'
 },
 mongodb: {
-    baseUrl: `mongodb+srv://admineze:UMC2yam.bqa2wdp8pkt@ecommercecoderhosuse.8sh6m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+    baseUrl: process.env.MONGO_URL,
     options: {
         useNewUrlParser: true,
         useUnifiedTopology: true,

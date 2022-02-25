@@ -26,10 +26,23 @@ export const io = new Server(server);
 const mensajes = new Mensajes()
 const users = new Usuarios()
 // io.use(ios(baseSession))
+let minimizedArgs= minimist(process.argv) 
+
+let PORT
+if (process.env.HEROKU_DEPLOY === "1") {
+    PORT = process.env.PORT
+} else {
+    PORT = minimizedArgs.port || 8080
+}
+
+export let port = PORT
+
+console.log(process.env.HEROKU_DEPLOY)
+console.log(PORT)
 
 app.use(session({
     store: MongoStore.create({
-        mongoUrl:"mongodb+srv://admineze:UMC2yam.bqa2wdp8pkt@ecommercecoderhosuse.8sh6m.mongodb.net/sessions?retryWrites=true&w=majority",
+        mongoUrl: process.env.MONGO_SESSIONS,
         ttl:600
     }),
     secret:"pa$$word",
